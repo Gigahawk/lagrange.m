@@ -6,16 +6,15 @@ function f = lagrange(r,n,a,subX)
     % Completely unnecessary but whatevs
     n = n+1;
     
-    % Finds the negative of lagrange formula(optimization function only
-    % finds minimums so it needs to be flipped
-    init = -((diff(r,x,n))*subs((x-a)^(n),x,subX))/factorial(n)
+    % Finds the negative of lagrange formula
+    % (optimization function only finds minimums so it needs to be flipped)
+    init = -((diff(r,x,n))*subs((x-a)^(n),x,subX))/factorial(n);
     
     % Somethingsomething data types matlab sure is confusing
     g = matlabFunction(init);
     
-    % Finds x value "subX" and "a" uninclusive such that g is at its
-    % minimum (I have no idea how to make fminbind search inclusive so
-    % whatever)
+    % fminbind isn't smart enough to search in both directions, 
+    % hence upper and lower boundaries are being defined explicitly
     if a < subX
         lower = a;
         upper = subX;
@@ -24,6 +23,8 @@ function f = lagrange(r,n,a,subX)
         upper = a;
     end
     
+    % Finds x value "subX" and "a" uninclusive such that g is at its
+    % minimum (I have no idea how to make fminbind search inclusive so whatever)
     minimumX = fminbnd(g,lower,upper);
     
     % Inverts initial calculation for final solution
