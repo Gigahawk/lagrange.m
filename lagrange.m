@@ -1,9 +1,8 @@
 
 function f = lagrange(r,n,a,subX)
-    % I quite honestly have no idea what this does 
     syms x;
     
-    % Completely unnecessary but whatevs
+    % Not necessary, but matter of personal preference
     n = n+1;
     
     % Finds the negative of lagrange formula
@@ -13,7 +12,7 @@ function f = lagrange(r,n,a,subX)
     % Somethingsomething data types matlab sure is confusing
     g = matlabFunction(init);
     
-    % fminbind isn't smart enough to search in both directions, 
+    % fminbnd only searches for minimums, 
     % hence upper and lower boundaries are being defined explicitly
     if a < subX
         lower = a;
@@ -30,7 +29,7 @@ function f = lagrange(r,n,a,subX)
     % Inverts initial calculation for final solution
     init = -init;
     
-    % ghetto solution to make it inclusive
+    % fminbnd isn't inclusive so this check must be explicit
     test1 = subs(init, x, minimumX);
     test2 = subs(init, x, subX);
     test3 = subs(init, x, a);
